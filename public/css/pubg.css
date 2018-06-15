@@ -1,0 +1,32 @@
+
+.slider.slider-horizontal{
+ 	width: 75% !important;
+ }
+
+
+.container-replay
+{
+	margin-left: 45px !important;
+}
+
+
+
+.bodyreplay
+{
+	height:100% !important;
+}
+
+.solo
+{
+	color: #e69557;
+}
+
+.duo
+{
+	color: #43a5a0;
+}
+
+.squad
+{
+	color: #6d68ac;
+}
