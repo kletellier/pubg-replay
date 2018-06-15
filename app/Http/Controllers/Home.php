@@ -43,7 +43,12 @@ class Home extends Controller
 
         if(!$ok)
         {
-            return view("Home/message",array('title'=>'Error','message'=>$player->getError()));
+        	$message = $player->getError();
+        	if($player->getLastHttpCode()==404)
+        	{
+        		$message = "Player : " . $name . " is unknown, check name case !!";
+        	}        	 
+            return view("Home/message",array('title'=>'Error','message'=>$message));
         }
         else
         {
