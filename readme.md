@@ -11,7 +11,7 @@
 ## Installation
 
 - Clone this repo on your server
-- Copy .env-example to .env : ```cp .env-example .env```
+- Copy .env.example to .env : ```cp .env.example .env```
 - Fill PUBG_KEY with your Pubg Api key in .env file, if you doesn't have one, claim it [Pubg API] (https://developer.playbattlegrounds.com/?loc=en) 
 - Fill your Redis server info in .env file
 - Execute ```composer update --prefer-dist -o``` 
