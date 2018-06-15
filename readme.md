@@ -4,7 +4,7 @@
 
  Website from displaying PUBG (Playerunknown's Battleground) animated replays on HTML5 canvas.
 
- This website has been developped on Laravel 5.6, with Jquery, Bootstrap 3 and KonvaJs, SimpleImage.
+ This website has been developped on Laravel 5.6, with Redis, Jquery, Bootstrap 3, KonvaJs and SimpleImage.
 
  You need PHP 7.1 server with GD extension and Redis server
 
@@ -26,7 +26,6 @@
 ![List](http://pubg-replay.kletellier.xyz/images/list.png) 
 
 ![Replay](http://pubg-replay.kletellier.xyz/images/replay.png) 
-
 
 ## License
 
