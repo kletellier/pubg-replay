@@ -25,7 +25,7 @@
 
 ![List](http://pubg-replay.kletellier.xyz/images/list.png) 
 
-![Replay](http://pubg-replay.kletellier.xyz/images/replay.png) 
+![Replay](http://pubg-replay.kletellier.xyz/images/replaypage.png) 
 
 ## License
 
