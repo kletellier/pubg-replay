@@ -39,6 +39,7 @@ class PathProvider
  		$zone_array = array();
  		$players_array = array();
  		$participants_array = array();
+ 		$damages_array = array();
 
  		$players = $collect->where('_T',"LogMatchEnd");
  		foreach ($players as $elem) {
@@ -115,6 +116,25 @@ class PathProvider
 			$zone_array[] = $zone;
         }
 
+        $attacks = $collect->where('_T','LogPlayerAttack');
+
+
+        $damages = $collect->where('_T','LogPlayerTakeDamage')->where('damageTypeCategory','Damage_Gun');
+        foreach ($damages as $elem) {
+        	$damage = new \stdClass();
+        	$damage->id = $elem->attackId;
+        	$damage->victim = $elem->victim->name;
+        	$damage->x1 = $elem->victim->location->x;
+        	$damage->y1 = $elem->victim->location->y;
+
+        	$attacker = $attacks->where('attackId',$damage->id)->first();
+        	$damage->victim = $attacker->attacker->name;
+        	$damage->x2 = $attacker->attacker->location->x;
+        	$damage->y2 = $attacker->attacker->location->y;
+        	$damage->elapsed = $datestart->diffInSeconds($ftdate($elem->_D));
+        	$damages_array[] = $damage;
+        }
+
         foreach ($participants_array as $participant) {
             $name = $participant->name;
             $obj = new \stdClass();
@@ -148,6 +168,7 @@ class PathProvider
         $ret->players = $players_array;
         $ret->duration = $maxelapsed;
         $ret->gamestates =$zone_array;
+        $ret->damages = $damages_array;
         $ret->loots = $loot_array;
 
         return $ret;  
