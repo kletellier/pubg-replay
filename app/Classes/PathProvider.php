@@ -128,7 +128,7 @@ class PathProvider
         	$damage->y1 = $elem->victim->location->y;
 
         	$attacker = $attacks->where('attackId',$damage->id)->first();
-        	$damage->victim = $attacker->attacker->name;
+        	$damage->attacker = $attacker->attacker->name;
         	$damage->x2 = $attacker->attacker->location->x;
         	$damage->y2 = $attacker->attacker->location->y;
         	$damage->elapsed = $datestart->diffInSeconds($ftdate($elem->_D));
