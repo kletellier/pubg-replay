@@ -51,6 +51,7 @@ var vRadius = 4;
 var vStroke = 1;
 var vDisplayName = true;
 var imageLoot = new Image(); 
+var vLastDisplayTime = 0;
 var vUrl = '{{ url("json/path") }}/' + vId + "/" + vShards + "/" + vUser;
 
 var stage;
@@ -498,8 +499,52 @@ vObj.players.forEach(function(eleme)
 
 });	
 
-$("#nbalive").html("Left : <strong>" + nbAlive + "</strong>");
+// display gun shots
+for(idmg=0;idmg < vObj.damages.length;idmg++)
+	{
+		var vDamage = vObj.damages[idmg];
+		var vId = "dmg_" + vDamage.id;
+		if(vDamage.elapsed > vNb)
+		{
+			break;
+		} 
+		if(vDamage.elapsed > vLastDisplayTime && vDamage.elapsed <= vNb)
+		{
+			var damager = vDamage.attacker;
+			var victim = vDamage.victim; 
 
+			var vPosDmg = stage.findOne("#" + damager);
+			var vPosVic = stage.findOne("#" + victim);
+
+			if(vPosDmg!==undefined && vPosVic!==undefined)
+			{ 
+				var x1 = vPosDmg.x();
+				var y1 = vPosDmg.y();
+				var x2 = vPosVic.x();
+				var y2  = vPosVic.y();
+
+			    var dmg = new Konva.Line({
+			      points: [x2, y2, x1, y1 ],
+			      stroke: 'red',
+			      strokeWidth: 2,
+			      id:vId
+			    });
+			    vLayer.add(dmg);
+			}			
+		}
+		else 
+		{			 
+			var dmg = stage.findOne("#" + vId);
+			if(dmg!==undefined)
+			{				 
+				dmg.destroy();
+			}			 
+		}
+		
+	}
+
+$("#nbalive").html("Left : <strong>" + nbAlive + "</strong>");
+vLastDisplayTime = vNb;
 vLayer.draw();
 }
 
