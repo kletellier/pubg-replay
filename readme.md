@@ -19,6 +19,8 @@
 - You can test with internal php server : ``` php artisan serve``` and browse http://127.0.0.1:8000
 - Or add it in your webserver and point it on public folder
 
+[Demo Site] (http://pubg-replay.kletellier.xyz)
+
 ## Screenshots
 
 ![Search](http://pubg-replay.kletellier.xyz/images/menu.png) 
