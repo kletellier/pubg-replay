@@ -91,8 +91,15 @@ success: onJson
 function onJson(data)
 {
 	vObj = data; 
-	vDuration = vObj.duration;	
-	displayMap();	
+	if(vObj===false)
+	{
+		document.location.href = "{{ url('/')}}";
+	}
+	else
+	{
+		vDuration = vObj.duration;	
+		displayMap();	
+	}	
 }
 
 function InitSlider()
