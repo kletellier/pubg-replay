@@ -49,8 +49,10 @@ class Match   {
 	 			$this->setJson($json);
 	 			if($this->id!=="")
 	 			{
+	 				$data_match_expire = env("REDIS_MATCH_TIMEOUT",1209600);
+
 	 				Redis::set($this->getCacheId(),$json);
-	 				Redis::expire($this->getCacheId(),1209600);
+	 				Redis::expire($this->getCacheId(),$data_match_expire);
 	 			}	 			
 	 			$ret = true;
 	 		}

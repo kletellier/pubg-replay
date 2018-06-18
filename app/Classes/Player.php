@@ -46,8 +46,10 @@ class Player   {
 	 			$this->setJson($json);
 	 			if($this->id!=="")
 	 			{
+	 				$player_data_expire = env("REDIS_PLAYER_TIMEOUT",1800);
+	 				
 	 				Redis::set($this->getCacheId(),$json);
-	 				Redis::expire($this->getCacheId(),1800);
+	 				Redis::expire($this->getCacheId(),$player_data_expire);
 	 			}	 			
 	 			$ret = true;
 	 		}
