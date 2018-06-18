@@ -523,6 +523,18 @@ for(idmg=0;idmg < vObj.damages.length;idmg++)
 				var x2 = vPosVic.x();
 				var y2  = vPosVic.y();
 
+				console.log("Position attacker " + vDamage.attacker);
+				console.log("x dmg " + coordToPix(vDamage.x1));
+				console.log("y dmg " + coordToPix(vDamage.y1));
+				console.log("x reel " + x1);
+				console.log("y reel " + y1);
+
+				console.log("Position victim " + vDamage.victim );
+				console.log("x vic " + coordToPix(vDamage.x2));
+				console.log("y vic " + coordToPix(vDamage.y2));
+				console.log("x reel " + x2);
+				console.log("y reel " + y2);
+
 			    var dmg = new Konva.Line({
 			      points: [x2, y2, x1, y1 ],
 			      stroke: 'red',
