@@ -52,6 +52,7 @@ var vStroke = 1;
 var vDisplayName = true;
 var imageLoot = new Image(); 
 var vLastDisplayTime = 0;
+var grpAttack = new Array();
 var vUrl = '{{ url("json/path") }}/' + vId + "/" + vShards + "/" + vUser;
 
 var stage;
@@ -348,8 +349,7 @@ function displayTime(vNb)
 			if(img!==undefined)
 			{
 				img.visible(false); 
-			}
-			
+			}			
 		}
 	});
 	
@@ -500,6 +500,10 @@ vObj.players.forEach(function(eleme)
 });	
 
 // display gun shots
+grpAttack.forEach(function(elem){
+	elem.visible(false);
+});
+
 for(idmg=0;idmg < vObj.damages.length;idmg++)
 	{
 		var vDamage = vObj.damages[idmg];
@@ -523,36 +527,32 @@ for(idmg=0;idmg < vObj.damages.length;idmg++)
 				var x2 = vPosVic.x();
 				var y2  = vPosVic.y();
 
-				console.log("Position attacker " + vDamage.attacker);
-				console.log("x dmg " + coordToPix(vDamage.x1));
-				console.log("y dmg " + coordToPix(vDamage.y1));
-				console.log("x reel " + x1);
-				console.log("y reel " + y1);
+				vPosVic.fill("#FFFF00");
 
-				console.log("Position victim " + vDamage.victim );
-				console.log("x vic " + coordToPix(vDamage.x2));
-				console.log("y vic " + coordToPix(vDamage.y2));
-				console.log("x reel " + x2);
-				console.log("y reel " + y2);
+				var dmg = stage.findOne("#" + vId);
+				if(dmg!==undefined)
+				{			
+				    dmg.visible(true);
+				}	
+				else
+				{
+                    dmg = new Konva.Line({
+				      points: [x1, y1, x2, y2 ],
+				      stroke: 'yellow',
+				      strokeWidth: 1,
+				      id:vId,
+				      name:vId
+				    });
+				    grpAttack.push(dmg);
+				}   
 
-			    var dmg = new Konva.Line({
-			      points: [x2, y2, x1, y1 ],
-			      stroke: 'red',
-			      strokeWidth: 2,
-			      id:vId
-			    });
 			    vLayer.add(dmg);
 			}			
 		}
 		else 
 		{			 
-			var dmg = stage.findOne("#" + vId);
-			if(dmg!==undefined)
-			{				 
-				dmg.destroy();
-			}			 
-		}
-		
+							 
+		}		
 	}
 
 $("#nbalive").html("Left : <strong>" + nbAlive + "</strong>");
