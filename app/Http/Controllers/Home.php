@@ -68,9 +68,14 @@ class Home extends Controller
         return view("Home/player",$param);
     }
      
-    public function replay($id,$shards,$user)
+    public function replay(Request $request,$id,$shards,$user)
     {
-        $param = array('title'=>'Replay','id'=>$id,'shards'=>$shards,'user'=>$user);
+        $size = "";
+        if($request->get('size')!="")
+        {
+            $size = $request->get('size');
+        }
+        $param = array('title'=>'Replay','id'=>$id,'shards'=>$shards,'user'=>$user,'size'=>$size);
         return view("Home/replay",$param);
     }
 

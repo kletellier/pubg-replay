@@ -70,7 +70,12 @@ $('#chkname').on('switchChange.bootstrapSwitch', function(event, state) {
 });
 $("#controls").hide();
 
-vSize= parseInt($(window).width()*0.92);
+@if($size!=="")
+	vSize= parseInt({{ $size }});
+@else 
+	vSize= parseInt($(window).width()*0.92);
+@endif
+
 if(vSize < 700)
 {
 	vRadius = 3;
