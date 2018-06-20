@@ -13,6 +13,7 @@
 
 Route::get('/', 'Home@index'); 
 Route::post('/player', 'Home@player');
+Route::get('/player/{player}/{page?}', 'Home@player');
 Route::get('/test', 'Home@test');
 Route::get('/itemicon/{id}','Image@itemicon');
 Route::get('/maplowres/{id}','Image@maplowres');

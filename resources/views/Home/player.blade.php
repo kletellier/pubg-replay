@@ -13,6 +13,19 @@
 	<div class="col-xs-12 text-center"><h4>{{ $name }} - {{ $shards }}</h4> </div>
 </div> 
 <div class="row">
+	<div class="col-xs-12 text-center">
+		<div class="btn-group">
+			@if($btnprev!="")
+				 
+			@endif
+			@if($btnnext!="")
+
+			@endif	
+
+		</div>
+	</div>
+</div> 
+<div class="row">
 	<table class="table table-bordered table-hover table-striped">
 		<thead>
 			<tr>

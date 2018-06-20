@@ -21,10 +21,11 @@ class Home extends Controller
             return view("Home/message",array('title'=>'Error','message'=>$message));
     }
 
-    public function player(Request $request)
+    public function player(Request $request,$player="",$page=1)
     {
         $name = $request->input('inpName');
         $shards = $request->input('inpShards');
+      
         $more_request_needed = false;
 
         $nb = Requester::RemainingRequests();
@@ -52,7 +53,22 @@ class Home extends Controller
         }
         else
         {
-           $matchs = $player->getMatchs();
+           $pagecount = env("PAGECOUNT",10);
+           $matchs_arr = $player->getMatchs();
+           $matchs_col = collect($matchs_arr);
+           $nb = $matchs_col->count();
+
+           $nbpage = round($nb / $pagecount);
+           
+           $skip = ($page-1) * $pagecount;
+           $matchs = $matchs_col->skip($skip)->take($pagecount);
+
+           $pageprev = $page-1;
+           $pagenext = $page+1;
+
+           if($pageprev<2){$pageprev="";}
+           if($pageprev>$nb){$pagenext="";}
+
            foreach ($matchs as $match) 
            {
                 $ret = $match->requestData();
@@ -64,7 +80,7 @@ class Home extends Controller
            }         
         }
 
-        $param = array('missing'=>$more_request_needed,'name'=>$name,'shards'=>$shards,'title'=>$name,'matches'=>$matchs);
+        $param = array('missing'=>$more_request_needed,'page'=>$page,'nbpage'=>$nbpage,'pageprev'=>$pageprev,'pagenext'=>$pagenext,'name'=>$name,'shards'=>$shards,'title'=>$name,'matches'=>$matchs);
         return view("Home/player",$param);
     }
      
