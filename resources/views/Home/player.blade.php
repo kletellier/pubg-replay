@@ -15,15 +15,18 @@
 <div class="row">
 	<div class="col-xs-12 text-center">
 		<div class="btn-group">
-			@if($btnprev!="")
-				 
+			@if($pageprev!="")
+				 <a href="{{ url('player') }}/{{ $pageprev }}" class="btn btn-default"><i class="fa fa-chevron-left"></i></a>
 			@endif
-			@if($btnnext!="")
-
+			@if($pagenext!="")
+				<a href="{{ url('player') }}/{{ $pagenext }}" class="btn btn-default"><i class="fa fa-chevron-right"></i></a>
 			@endif	
 
 		</div>
 	</div>
+</div> 
+<div class="row">
+	<div class="col-xs-12 text-center">&nbsp;</div>
 </div> 
 <div class="row">
 	<table class="table table-bordered table-hover table-striped">

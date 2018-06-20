@@ -21,10 +21,32 @@ class Home extends Controller
             return view("Home/message",array('title'=>'Error','message'=>$message));
     }
 
-    public function player(Request $request,$player="",$page=1)
+    public function player(Request $request,$page=1)
     {
-        $name = $request->input('inpName');
-        $shards = $request->input('inpShards');
+        $post = $request->isMethod('post');
+
+        $name = "";
+        $shards = "";
+
+        if($post)
+        {
+          $name = $request->input('inpName');
+          $shards = $request->input('inpShards');
+
+          $request->session()->put('search_name', $name);
+          $request->session()->put('search_shards', $shards);
+        }
+        else
+        {
+          $name = $request->session()->get('search_name',"");
+          $shards = $request->session()->get('search_shards',"");
+        }
+
+        if($name=="" && $shards=="")
+        {
+            $message = "Incorrect request";
+            return view("Home/message",array('title'=>'Error','message'=>$message));
+        }        
       
         $more_request_needed = false;
 
@@ -58,16 +80,15 @@ class Home extends Controller
            $matchs_col = collect($matchs_arr);
            $nb = $matchs_col->count();
 
-           $nbpage = round($nb / $pagecount);
-           
-           $skip = ($page-1) * $pagecount;
-           $matchs = $matchs_col->skip($skip)->take($pagecount);
+           $nbpage = (int)ceil($nb / $pagecount);
 
-           $pageprev = $page-1;
-           $pagenext = $page+1;
+           $matchs = $matchs_col->forPage($page,$pagecount);
 
-           if($pageprev<2){$pageprev="";}
-           if($pageprev>$nb){$pagenext="";}
+           $pageprev = $page - 1;
+           $pagenext = $page + 1;           
+
+           if($page==1){$pageprev="";}
+           if($page==$nbpage){$pagenext="";}
 
            foreach ($matchs as $match) 
            {
