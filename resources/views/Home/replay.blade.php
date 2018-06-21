@@ -202,7 +202,7 @@ function RefreshMaps()
 	{
 		if( vSecondes < vObj.duration)
 		{
-			vSecondes+=vSpeed/5;			
+			vSecondes += (vSpeed/5);			
 			displayTime(vSecondes);
 		}
 		else
@@ -278,6 +278,8 @@ vObj.players.forEach(function(eleme)
 	y: 0,
 	text: name + " (" + eleme.winPlace + ")",
 	fill: 'white',
+	fontSize: 11,
+	fontStyle: 'bold',
 	id:"txt_" + name
 	});
 
@@ -489,13 +491,16 @@ vObj.players.forEach(function(eleme)
 	if( vNb < eleme.kill)
 	{
 		var texte = stage.findOne("#txt_" + name);
-		texte.x(coordToPix(x)+15);
-		texte.y(coordToPix(y));
-		texte.visible(vDisplayName);
+		texte.x(coordToPix(x) + 5);
+		texte.y(coordToPix(y) - 5);
+		texte.visible(vDisplayName);		 
 		if(eleme.isplayer==1)
 		{
-			texte.fill('yellow');
-			texte.fontStyle('bold');
+			texte.fill('#33cc33');			
+		}
+		else
+		{ 
+			texte.fill('white');
 		}
 	}
 	else
