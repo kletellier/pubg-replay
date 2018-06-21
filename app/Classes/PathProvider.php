@@ -12,6 +12,7 @@ class PathProvider
 	{
 		$obj = json_decode($json);
 		$collect = collect($obj);
+		$gba = $collect->groupBy('_T')->toArray();
 
 		$maxelapsed = 0;
 		$team_id = "";
@@ -30,7 +31,12 @@ class PathProvider
 			return  \Carbon\Carbon::createFromFormat("Y-m-d H:i:s",$date,"UTC");
  		};
 
- 		$start = $collect->where('_T',"LogMatchStart")->first();
+ 		$getItems = function($collection,$key)
+ 		{
+ 			return collect($collection[$key]);
+ 		};
+
+ 		$start = $getItems($gba,"LogMatchStart")->first();
         $startt = $start->_D;
         $datestart = $ftdate($startt);	
 
@@ -41,7 +47,7 @@ class PathProvider
  		$participants_array = array();
  		$damages_array = array();
 
- 		$players = $collect->where('_T',"LogMatchEnd");
+ 		$players =$getItems($gba,"LogMatchEnd");
  		foreach ($players as $elem) {
  			foreach ($elem->characters as $char) {
  				$participant = new \stdClass();
@@ -67,7 +73,7 @@ class PathProvider
  		$parts = collect($participants_array);
  		$names = $parts->where('teamId',$team_id)->pluck('name')->toArray();
 
-		$positions = $collect->where('_T',"LogPlayerPosition");
+		$positions = $getItems($gba,"LogPlayerPosition");
         foreach ($positions as $elem) {
         	$position = new \stdClass();
 			$position->id = $id;
@@ -82,7 +88,7 @@ class PathProvider
 
         $locs = collect($position_array);	  
         
-        $loots = $collect->where('_T',"LogCarePackageLand");
+        $loots = $getItems($gba,"LogCarePackageLand");
         foreach ($loots as $elem) {
         	$loot = new \stdClass();
 			$loot->id = $id;
@@ -94,7 +100,7 @@ class PathProvider
 			$loot_array[] = $loot;
         } 	 
 
-        $zones = $collect->where('_T',"LogGameStatePeriodic");
+        $zones = $getItems($gba,"LogGameStatePeriodic");
         foreach($zones as $elem)
         {
         	$zone = new \stdClass();
@@ -116,10 +122,10 @@ class PathProvider
 			$zone_array[] = $zone;
         }
 
-        $attacks = $collect->where('_T','LogPlayerAttack');
+        $attacks = $getItems($gba,'LogPlayerAttack');
 
 
-        $damages = $collect->where('_T','LogPlayerTakeDamage')->where('damageTypeCategory','Damage_Gun');
+        $damages = $getItems($gba,'LogPlayerTakeDamage')->where('damageTypeCategory','Damage_Gun');
         foreach ($damages as $elem) {
         	$damage = new \stdClass();
         	$damage->id = $elem->attackId;
