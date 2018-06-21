@@ -89,9 +89,16 @@ if(vSize < 700)
 $.ajax({
 dataType: "json",
 url: vUrl, 
-success: onJson
+success: onJson,
+error: onError
 });
 });
+
+function onError()
+{
+	$("#wait").text("Error during request, please refresh by press F5 key...");
+	$("#wait").show();
+}
 
 function onJson(data)
 {
