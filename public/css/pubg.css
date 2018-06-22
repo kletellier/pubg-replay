@@ -9,7 +9,13 @@
 	margin-left: 45px !important;
 }
 
-
+.scroll-container {
+    width: calc(100% - 70px);
+    height: calc(100vh - 120px);
+    overflow: auto;
+    margin: 10px;
+    border: 1px solid grey;
+}
 
 .bodyreplay
 {

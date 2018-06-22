@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>  
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-  <link rel="stylesheet" type="text/css" href="{{ url('css/pubg.css' ) }}?d=20180614"> 
+  <link rel="stylesheet" type="text/css" href="{{ url('css/pubg.css' ) }}?d=20180622"> 
   <script src="{{ url('js/konva.js' ) }}"></script>
   <link rel="stylesheet" type="text/css" href="{{ url('css/bootstrap-slider.min.css') }}">
   <script src="{{ url('js/bootstrap-slider.min.js') }}"></script>
