@@ -226,10 +226,35 @@ initCircles();
 InitSlider();
 
 
-
 $("#wait").hide();
 $("#controls").show();
 $("#slider").show();
+
+// enable zoom system
+var scaleBy = 1.05;
+window.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    var oldScale = stage.scaleX();
+
+    var mousePointTo = {
+        x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
+        y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale,
+    };
+
+    var newScale = e.deltaY < 0 ? oldScale * scaleBy : oldScale / scaleBy;
+    if(newScale < 1)
+    {
+    	newScale = 1;
+    }
+    stage.scale({ x: newScale, y: newScale });
+
+    var newPos = {
+        x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
+        y: -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale
+    };
+    stage.position(newPos);
+    stage.batchDraw();
+});
  
 
 vTimer = setInterval(RefreshMaps, 200);
