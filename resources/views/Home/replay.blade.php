@@ -252,6 +252,13 @@ window.addEventListener('wheel', (e) => {
         x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
         y: -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale
     };
+    if(newScale == 1)
+    {
+    	newPos = {
+        x: 0,
+        y: 0
+    	};
+    }
     stage.position(newPos);
     stage.batchDraw();
 });
