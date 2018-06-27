@@ -48,6 +48,7 @@ class Requester
 	 		$this->curl->setHeader('Authorization', 'Bearer ' . $key);
 			$this->curl->setHeader('Accept', 'application/vnd.api+json');
 	 	}	 	
+	 	$this->curl->setOpt(CURLOPT_ENCODING , 'gzip');
 		$this->curl->setOpt(CURLOPT_RETURNTRANSFER, TRUE);
 		$this->curl->setOpt(CURLOPT_FOLLOWLOCATION, TRUE);
 		$this->curl->setOpt(CURLOPT_TIMEOUT, 45);
