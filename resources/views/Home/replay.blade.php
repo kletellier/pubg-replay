@@ -32,9 +32,6 @@ function ftSec(vSec)
 	return vSec.toMMSS();
 }
 
-@if($size!=="")
-var vPlayerSelected = "";
-@endif
 var vId = '{!! $id !!}';
 var vShards = '{!! $shards !!}';
 var vUser = '{!! $user !!}';
@@ -73,28 +70,14 @@ $('#chkname').on('switchChange.bootstrapSwitch', function(event, state) {
 });
 $("#controls").hide();
 
-@if($size!=="")
-	var vWindow = parseInt($(window).width()*0.92);	
-	vSize= parseInt({{ $size }});
-	if(vSize < vWindow)
-	{
-		vSize = vWindow;
-	}
-	var vScroll = parseInt(vSize*0.92); 
-	var vHeight = $(window).height(); 
-@else 
-	vSize= parseInt($(window).width()*0.92);
-@endif
+
+vSize= parseInt($(window).width()*0.92);
 
 if(vSize < 700)
 {
 	vRadius = 3;
 	vStroke = 1;
 } 
-
-
-
-
 
 $.ajax({
 dataType: "json",
@@ -118,37 +101,11 @@ function onJson(data)
 		document.location.href = "{{ url('/')}}";
 	}
 	else
-	{
-		@if($size!='')
-		vObj.players.forEach(function(eleme)
-		{
-			if(eleme.isplayer==1)
-			{
-				var vHtml = "<a class='btn btn-default' player='" + eleme.name + "' href='javascript:dpPlayer(\"" + eleme.name + "\")'>" + eleme.name + "</a>";
-				$("#selNom").prepend(vHtml);
-			}			
-		});		 
-		@endif
+	{		
 		vDuration = vObj.duration;	
 		displayMap();	
 	}	
 }
-
-@if($size!='')
-function dpPlayer(vName)
-{ 
-	 
-	var vJoueur = stage.findOne("#" + vName);
-	var x = vJoueur.x();
-	var y = vJoueur.y();	
-	
-	var vW = $(window).width()/2;
-	var vH = $(window).height()/2;
-
-	$(".scroll-container").scrollLeft(x-vW) ;
-	$(".scroll-container").scrollTop(y-vH);
-}
-@endif
 
 function InitSlider()
 {
@@ -697,14 +654,8 @@ vLayer.draw();
 	<i class="fa fa-refresh fa-spin"></i>&nbsp;Loading in progress... This may take few seconds !!
 </div> 
 <div class="row">
-	<div col="col-xs-12">		
-	@if($size!=="")
-	<div class="scroll-container">
-@endif	 
-		<div id="container"></div>
-		@if($size!=="")
-	</div>
-@endif	 
+	<div col="col-xs-12">
+		<div id="container"></div>		 
 	</div>
 </div> 
 

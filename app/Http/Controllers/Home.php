@@ -106,25 +106,8 @@ class Home extends Controller
     }
      
     public function replay(Request $request,$id,$shards,$user)
-    {
-        $size = "";
-        $reqsize = $request->get('size');
-        if($reqsize!="")
-        {
-          if(is_numeric($reqsize))
-          {
-            $size = (int)$reqsize;
-            if($size>4096)
-            {
-              $size=4096;              
-            }
-            if($size<512)
-            {
-              $size = 512;
-            }
-          }
-        }
-        $param = array('title'=>'Replay','id'=>$id,'shards'=>$shards,'user'=>$user,'size'=>$size);
+    {         
+        $param = array('title'=>'Replay','id'=>$id,'shards'=>$shards,'user'=>$user);
         return view("Home/replay",$param);
     }
 
