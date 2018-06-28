@@ -651,7 +651,19 @@ vLayer.draw();
 	&nbsp;
 </div>
 <div class="row" id="wait">
+	<p>
 	<i class="fa fa-refresh fa-spin"></i>&nbsp;Loading in progress... This may take few seconds !!
+</p>
+	<p>
+		Why it take some times to display my replay ?
+		<ul>
+			<li> First we must extract telemetry url from your match </li>
+			<li> After we download the telemetry, a big JSON file of 10-13 Mo...</li>
+			<li> We parse this file to extract the needing data for the replay.</li>
+			<li> After this we download the map file and the data on your browser (between 3 and 6 Mo for the map file and 400ko for the replay data)</li>
+			<li> And it's done... The first time it can take <strong> 30 seconds </strong>, next viewing take less time because replay data was cached in the server</li>
+		</ul>
+	</p>
 </div> 
 <div class="row">
 	<div col="col-xs-12">
