@@ -47,6 +47,16 @@ class PathProvider
  		$participants_array = array();
  		$damages_array = array();
 
+        $ids = $getItems($gba,"LogMatchDefinition")->first();  
+        $idtmp = $ids->MatchId;
+        $obj = S::create($idtmp);
+        $posdash = $obj->indexOfLast("."); 
+        $id = $obj->substr($posdash+1)->__toString();             
+            
+
+        $starts = $getItems($gba,"LogMatchStart")->first();       
+        $carte = $starts->mapName;
+
  		$players =$getItems($gba,"LogMatchEnd");
  		foreach ($players as $elem) {
  			foreach ($elem->characters as $char) {
@@ -60,14 +70,7 @@ class PathProvider
 	 			$participant->teamId = $char->teamId;
 	 			$participants_array[] = $participant;	 			
  			} 
- 			if($id==="")
- 			{ 
- 				$idtmp = $elem->common->matchId;
- 				$obj = S::create($idtmp);
- 				$posdash = $obj->indexOfLast("."); 
- 				$id = $obj->substr($posdash+1)->__toString();
- 				$carte = $elem->common->mapName;
- 			}			
+ 					
  		}
 
  		$parts = collect($participants_array);
@@ -175,7 +178,7 @@ class PathProvider
         $ret->duration = $maxelapsed;
         $ret->gamestates =$zone_array;
         $ret->damages = $damages_array;
-        $ret->loots = $loot_array;
+        $ret->loots = $loot_array; 
 
         return $ret;  
 	}	 
