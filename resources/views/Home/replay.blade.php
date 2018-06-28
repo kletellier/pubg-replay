@@ -47,6 +47,7 @@ var vSecondes = 0;
 var vSpeed = 10;
 var vPause = false;
 var vDuration = 0;
+var vRadiusInit;
 var vRadius = 4;
 var vStroke = 1;
 var vDisplayName = true;
@@ -54,7 +55,7 @@ var imageLoot = new Image();
 var vLastDisplayTime = 0;
 var grpAttack = new Array();
 var vUrl = '{{ url("json/path") }}/' + vId + "/" + vShards + "/" + vUser;
-
+var vScale = 1;
 var stage;
 
 $(document).ready(function(){
@@ -78,6 +79,8 @@ if(vSize < 700)
 	vRadius = 3;
 	vStroke = 1;
 } 
+
+vRadiusInit = vRadius;
 
 $.ajax({
 dataType: "json",
@@ -216,6 +219,7 @@ window.addEventListener('wheel', (e) => {
         y: 0
     	};
     }
+    vScale = newScale;
     stage.position(newPos);
     stage.batchDraw();
 });
@@ -518,6 +522,14 @@ vObj.players.forEach(function(eleme)
 	var circle = stage.findOne("#" + name);
 	circle.x(coordToPix(x));
 	circle.y(coordToPix(y));
+	if(vScale > 1)
+	{
+		circle.radius(2);
+	}
+	else
+	{
+		circle.radius(vRadiusInit);
+	}
 	circle.fill(couleur);
 	
 	if( vNb < eleme.kill)
@@ -525,7 +537,15 @@ vObj.players.forEach(function(eleme)
 		var texte = stage.findOne("#txt_" + name);
 		texte.x(coordToPix(x) + 5);
 		texte.y(coordToPix(y) - 5);
-		texte.visible(vDisplayName);		 
+		texte.visible(vDisplayName);
+		if(vScale > 1)
+		{
+			texte.fontSize(6);
+		}
+		else 
+		{
+			texte.fontSize(11);
+		}		 
 		if(eleme.isplayer==1)
 		{
 			texte.fill('#33cc33');			
