@@ -239,7 +239,7 @@ function adaptSize(scale)
     {
         var vName = eleme.name;
         var vCircle = stage.findOne("#" + vName);
-        var vTexte = stage.findOne("#ttx_" + vName);
+        var vTexte = stage.findOne("#txt_" + vName);
         vCircle.radius(vRadius);
         vTexte.fontSize(vFontSize);
     });
