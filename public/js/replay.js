@@ -213,6 +213,54 @@ window.addEventListener('wheel', (e) => {
     adaptSize(vScale);
 });
 
+
+stage.on('tap',function(){
+    var vScaleFactor = 1.4;
+    var oldScale = stage.scaleX();
+
+    var mousePointTo = {
+        x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
+        y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale,
+    };
+
+    var newScale =   oldScale * vScaleFactor;
+    if(newScale < 1)
+    {
+        newScale = 1;
+    }
+    stage.scale({ x: newScale, y: newScale });
+
+    var newPos = {
+        x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
+        y: -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale
+    };
+    if(newScale == 1)
+    {
+        newPos = {
+            x: 0,
+            y: 0
+        };
+    }
+    vScale = newScale;
+ 
+    stage.position(newPos);
+    stage.batchDraw();
+    adaptSize(vScale);
+});
+
+stage.on('dbltap',function(){
+    vScale = 1;
+     newPos = {
+            x: 0,
+            y: 0
+        };
+    stage.scale({ x: vScale, y: vScale });
+    stage.position(newPos);
+    stage.batchDraw();
+    adaptSize(vScale);    
+});
+
+
 // start timer
 vTimer = setInterval(RefreshMaps, 200);
 
