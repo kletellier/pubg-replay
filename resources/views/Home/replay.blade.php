@@ -14,6 +14,10 @@ var vUrl = '{{ url("json/path") }}/' + vId + "/" + vShards + "/" + vUser;
 var vUrlRoot =  "{{ url('/')}}";
 var vUrlMap = "{{ url('maplowres') }}/";
 
+function showZoomHelp()
+{
+	bootbox.alert("You can zoom by using the mousewheel on a computer, with touch device like mobile or tablet, you can zoom by simple tap, unzoom to scale 1 by double tap");
+}
 @endsection
 
 @section('contenu')
@@ -32,6 +36,7 @@ var vUrlMap = "{{ url('maplowres') }}/";
 		<a class="btn btn-default clspeed"  id="speed15" href="javascript:setSpeed(15)">x15</a>
 		<a class="btn btn-default clspeed"  id="speed20" href="javascript:setSpeed(20)">x20</a>
 		<a class="btn btn-default clspeed"  id="speed35" href="javascript:setSpeed(35)">x35</a>
+		<a class="btn btn-default"    href="javascript:showZoomHelp()"><i class="fa fa-search-plus"></i></a>
 		<a class="btn btn-default" title="Take screenshot"  href="javascript:exportImage()"><i class="fa fa-photo"></i></a> 
 		<a class="btn btn-default" title="Go to main menu" href="{{ url('/') }}"><i class="fa fa-home"></i></a> 
 	</div>
