@@ -22,7 +22,7 @@
   <script>
       @yield('script')
   </script>
-  <script src="{{ url('js/replay.js' ) }}"></script>
+  <script src="{{ url('js/replay.js' ) }}?v=20180704"></script>
 </head>
 <body class="bodyreplay">
 <div class="container-replay">   
