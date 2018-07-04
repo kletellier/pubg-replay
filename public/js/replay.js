@@ -286,8 +286,9 @@ function adaptSize(scale)
     vObj.players.forEach(function(eleme)
     {
         var vName = eleme.name;
-        var vCircle = stage.findOne("#" + vName);
-        var vTexte = stage.findOne("#txt_" + vName);
+        var vId = eleme.id;
+        var vCircle = stage.findOne("#" + vId);
+        var vTexte = stage.findOne("#txt_" + vId);
         vCircle.radius(vRadius);
         vTexte.fontSize(vFontSize);
     });
