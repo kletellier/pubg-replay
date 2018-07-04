@@ -352,6 +352,7 @@ function initCircles()
     vObj.players.forEach(function(eleme)
     {
         name = eleme.name;
+        id = eleme.id;
         pts = eleme.points;
         x = 0;
         y = 0;
@@ -364,7 +365,7 @@ function initCircles()
             fill: couleur,
             stroke: 'black',
             strokeWidth: vStroke,
-            id:name,
+            id:id,
             perfectDrawEnabled : false
         });
 
@@ -375,7 +376,7 @@ function initCircles()
             fill: 'white',
             fontSize: 11,
             fontStyle: 'bold',
-            id:"txt_" + name
+            id:"txt_" + id
         });
 
         if(eleme.isplayer==1)
@@ -557,6 +558,7 @@ function displayTime(vNb)
     {
 
         name = eleme.name;
+        id = eleme.id;
         pts = eleme.points;
         x = 0;
         y = 0;
@@ -592,21 +594,21 @@ function displayTime(vNb)
 
     }
 
-    var circle = stage.findOne("#" + name);
+    var circle = stage.findOne("#" + id);    
     circle.x(coordToPix(x));
     circle.y(coordToPix(y));    
     circle.fill(couleur);
     
     if( vNb < eleme.kill)
     {
-        var texte = stage.findOne("#txt_" + name);
+        var texte = stage.findOne("#txt_" + id);
         texte.x(coordToPix(x) + 5);
         texte.y(coordToPix(y) - 5);
         texte.visible(vDisplayName);        
     }
     else
     {
-        var texte = stage.findOne("#txt_" + name);
+        var texte = stage.findOne("#txt_" + id);
         if(texte!==undefined)
         {
             texte.visible(false);
@@ -630,8 +632,8 @@ for(idmg=0;idmg < vObj.damages.length;idmg++)
     } 
     if(vDamage.elapsed > vLastDisplayTime && vDamage.elapsed <= vNb)
     {
-        var damager = vDamage.attacker;
-        var victim = vDamage.victim; 
+        var damager = vDamage.attackerId;
+        var victim = vDamage.victimId; 
 
         var vPosDmg = stage.findOne("#" + damager);
         var vPosVic = stage.findOne("#" + victim);

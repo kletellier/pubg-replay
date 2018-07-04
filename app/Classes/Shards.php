@@ -22,7 +22,7 @@ class Shards   {
    {
       $ret = array();
 
-      $ids = array("pc-krjp","pc-na","pc-eu","pc-oc","pc-kakao","pc-sea","pc-sa","pc-as");
+      $ids = array("pc-krjp","pc-na","pc-eu","pc-oc","pc-kakao","pc-sea","pc-sa","pc-as","xbox-as","xbox-eu","xbox-na","xbox-oc");
       foreach ($ids as $id) {
          $shd = new \stdClass();
          $shd->value = $id;

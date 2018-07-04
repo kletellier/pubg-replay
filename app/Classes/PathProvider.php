@@ -66,6 +66,7 @@ class PathProvider
             foreach ($elem->characters as $char) {
                 $participant = new \stdClass();
                 $participant->name = $char->name;
+                $participant->id = sha1($char->name);
                 if($char->name==$name)
                 {
                     $team_id = $char->teamId;
@@ -137,11 +138,13 @@ class PathProvider
             $damage = new \stdClass();
             $damage->id = $elem->attackId;
             $damage->victim = $elem->victim->name;
+            $damage->victimId = sha1($elem->victim->name);
             $damage->x1 = $elem->victim->location->x;
             $damage->y1 = $elem->victim->location->y;
 
             $attacker = $attacks->where('attackId',$damage->id)->first();
             $damage->attacker = $attacker->attacker->name;
+            $damage->attackerId = sha1($attacker->attacker->name);
             $damage->x2 = $attacker->attacker->location->x;
             $damage->y2 = $attacker->attacker->location->y;
             $damage->elapsed = $datestart->diffInSeconds($ftdate($elem->_D));
@@ -152,6 +155,7 @@ class PathProvider
             $name = $participant->name;
             $obj = new \stdClass();
             $obj->name = $name;
+            $obj->id = $participant->id;
             $obj->color = in_array($name,$names) ? "#00ff00": "#ffffff";
             $obj->points = array();
             $obj->teamId = $participant->teamId;
