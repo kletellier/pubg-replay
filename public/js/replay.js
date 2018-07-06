@@ -273,14 +273,24 @@ imageLoot.src = vUrlLoot;
 }
 
 function adaptSize(scale)
-{
+{    
     vFontSize = 6
     vRadius = 2;
+    var vTmpStroke = true;
 
     if(scale==1)
     {
         vRadius = vRadiusInit;
         vFontSize = 11;
+    }
+    else
+    {
+        vFontSize = 12 / scale;
+        if(scale>4)
+        {
+           vRadius = 1;
+           vTmpStroke = false;
+        }         
     }
 
     vObj.players.forEach(function(eleme)
@@ -290,6 +300,7 @@ function adaptSize(scale)
         var vCircle = stage.findOne("#" + vId);
         var vTexte = stage.findOne("#txt_" + vId);
         vCircle.radius(vRadius);
+        //vCircle.strokeEnabled(vTmpStroke);
         vTexte.fontSize(vFontSize);
     });
 }
