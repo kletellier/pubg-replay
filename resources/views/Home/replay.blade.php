@@ -18,6 +18,11 @@ function showZoomHelp()
 {
 	bootbox.alert("You can zoom by using the mousewheel on a computer, with touch device like mobile or tablet, you can zoom by simple tap, unzoom to scale 1 by double tap");
 }
+
+$(document).ready(function()
+{
+	$("#social-links ul").addClass("list-inline"); 
+});
 @endsection
 
 @section('contenu')
@@ -47,7 +52,11 @@ function showZoomHelp()
 	</div> 
 	<div class="btn-group" id="selNom">
 		
-	</div> 
+	</div>
+	<div class="btn-group" id="selNom">
+		<?php echo \Share::currentPage("See my PUBG Replay")->facebook()->twitter(); ?>
+	</div>
+	
 </div>
 <div class="row">
 	&nbsp;
