@@ -19,6 +19,7 @@
   <script src="{{ url('js/bootstrap-slider.min.js') }}"></script>
   <link href="{{ url('css/bootstrap-switch.min.css') }}" rel="stylesheet"> 
   <script src="{{ url('js/bootstrap-switch.min.js') }}"></script>
+  <script src="{{ asset('js/share.js') }}"></script>
   <script>
       @yield('script')
   </script>
