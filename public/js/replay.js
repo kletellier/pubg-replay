@@ -369,6 +369,11 @@ function initCircles()
         x = 0;
         y = 0;
         couleur = eleme.color;
+        
+        if(vObj.carte ==="DihorOtok_Main" && eleme.isplayer===0)
+        {
+            couleur = "#767676";
+        }
 
         var circle = new Konva.Circle({
             x: 0,
@@ -397,7 +402,15 @@ function initCircles()
         }
         else
         { 
-            text.fill('white');
+             if(vObj.carte ==="DihorOtok_Main" && eleme.isplayer===0)
+                {
+                   text.fill('#000055'); 
+                }
+                else
+                {
+                     text.fill('white'); 
+                }
+            
         }
 
         vLayer.add(text);
@@ -586,6 +599,8 @@ function displayTime(vNb)
             y = coord.y;
         }
         couleur = "#ff0000";
+
+
     }
     else
     {
@@ -603,7 +618,10 @@ function displayTime(vNb)
                 break;
             }
         }
-
+         if(vObj.carte ==="DihorOtok_Main" && eleme.isplayer===0)
+        {
+            couleur = "#767676";
+        }
     }
 
     var circle = stage.findOne("#" + id);    
