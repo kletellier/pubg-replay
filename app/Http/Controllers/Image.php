@@ -24,6 +24,9 @@ class Image extends Controller
             case Maps::MAP_SAVAGE:
                 $file = "savage.jpg"; 
                 break;
+            case Maps::MAP_VIKENDI:
+                $file = "vikendi.jpg"; 
+                break;
             default:
                 $file = "default.jpg";
                 break;
