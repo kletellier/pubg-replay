@@ -148,6 +148,11 @@ function displayMap()
        vMapDistance = 408000;
    }
 
+    if(vCarte==="DihorOtok_Main")
+    {
+       vMapDistance = 612000;
+   }
+
    var layer = new Konva.Layer();
    var imageObj = new Image();
 
