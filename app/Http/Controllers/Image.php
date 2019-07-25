@@ -16,6 +16,7 @@ class Image extends Controller
     {      
         switch ($id) {
             case Maps::MAP_ERANGEL:
+            case Maps::MAP_BALTIC:
                 $file = "erangel.jpg";
                 break;
             case Maps::MAP_MIRAMAR:
