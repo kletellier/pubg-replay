@@ -15,9 +15,11 @@ class Image extends Controller
     public function maplowres($id)
     {      
         switch ($id) {
-            case Maps::MAP_ERANGEL:
+           case Maps::MAP_ERANGEL:
+                $file = "erangel.png";
+                break;
             case Maps::MAP_BALTIC:
-                $file = "erangel.jpg";
+                $file = "baltic.png";
                 break;
             case Maps::MAP_MIRAMAR:
                 $file = "miramar.jpg";
