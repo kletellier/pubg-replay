@@ -127,6 +127,9 @@ class PathProvider
             $zone->redzone_radius = $elem->gameState->redZoneRadius;
             $zone->redzone_x = $elem->gameState->redZonePosition->x;
             $zone->redzone_y = $elem->gameState->redZonePosition->y;
+            $zone->blackzone_radius = $elem->gameState->blackZoneRadius;
+            $zone->blackzone_x = $elem->gameState->blackZonePosition->x;
+            $zone->blackzone_y = $elem->gameState->blackZonePosition->y;
             $zone_array[] = $zone;
         }
 

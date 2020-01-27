@@ -345,6 +345,19 @@ function initCircles()
 
     vLayer.add(bcircle);
 
+    var gcircle = new Konva.Circle({
+        x: 0,
+        y: 0,
+        radius: 0, 
+        stroke: 'gray',
+        fill: 'gray',
+        strokeWidth: 2,        
+        opacity: 0.4,
+        id:'gcircle'
+    });
+
+    vLayer.add(gcircle);
+
 
     var wcircle = new Konva.Circle({
         x: 0,
@@ -519,6 +532,10 @@ function displayTime(vNb)
     var vRougeY = 0;
     var vRougeR = 0;
 
+    var vNoirX = 0;
+    var vNoirY = 0;
+    var vNoirR = 0;
+
     for(igms=0;igms < vObj.gamestates.length;igms++)
     {
         var gs = vObj.gamestates[igms];
@@ -533,6 +550,9 @@ function displayTime(vNb)
             vRougeX  = gs.redzone_x;
             vRougeY  = gs.redzone_y;
             vRougeR  = gs.redzone_radius;
+            vNoirX  = gs.blackzone_x;
+            vNoirY  = gs.blackzone_y;
+            vNoirR  = gs.blackzone_radius;
         }   
         else
         {
@@ -553,6 +573,21 @@ function displayTime(vNb)
         wcircle.x(0);
         wcircle.y(0);
         wcircle.radius(0); 
+    }
+
+    if(vNoirR>0)
+    {
+        var gcircle = stage.findOne("#gcircle");
+        gcircle.x(coordToPix(vNoirX));
+        gcircle.y(coordToPix(vNoirY));
+        gcircle.radius(coordToPix(vNoirR)); 
+    }
+    else
+    {
+        var gcircle = stage.findOne("#gcircle");
+        gcircle.x(0);
+        gcircle.y(0);
+        gcircle.radius(0); 
     }
 
     if(vBleuR>0)
