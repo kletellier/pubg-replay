@@ -11,4 +11,5 @@ class Maps   {
    const MAP_SAVAGE   = "Savage_Main"; 
    const MAP_VIKENDI = "DihorOtok_Main";
    const MAP_BALTIC = "Baltic_Main";
+   const MAP_SUMMERLAND = "Summerland_Main";
 }

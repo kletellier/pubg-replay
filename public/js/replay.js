@@ -71,7 +71,6 @@ $(document).ready(function(){
     } 
 
     vRadiusInit = vRadius;
-
     $.ajax({
         dataType: "json",
         url: vUrl, 
@@ -151,6 +150,11 @@ function displayMap()
     if(vCarte==="DihorOtok_Main")
     {
        vMapDistance = 612000;
+   }
+
+   if(vCarte==="Summerland_Main")
+    {
+       vMapDistance = 204000;
    }
 
    var layer = new Konva.Layer();
