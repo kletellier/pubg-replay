@@ -17,12 +17,12 @@ Number.prototype.toMMSS = function () {
 
 function exportImage()
 {
-	window.open(stage.toDataURL(), '_blank');
+    window.open(stage.toDataURL(), '_blank');
 }
 
 function ftSec(vSec)
 {
-	return vSec.toMMSS();
+    return vSec.toMMSS();
 }
 
 
@@ -71,6 +71,7 @@ $(document).ready(function(){
     } 
 
     vRadiusInit = vRadius;
+
     $.ajax({
         dataType: "json",
         url: vUrl, 
@@ -81,7 +82,7 @@ $(document).ready(function(){
 
 function onError()
 {
-    $("#wait").text("Error during request, please refresh by press F5 key...");
+    $("#wait").text("Erreur, refraichir avec la touche F5...");
     $("#wait").show();
 }
 
@@ -147,15 +148,16 @@ function displayMap()
        vMapDistance = 408000;
    }
 
-    if(vCarte==="DihorOtok_Main")
+      if(vCarte==="DihorOtok_Main")
     {
        vMapDistance = 612000;
    }
 
-   if(vCarte==="Summerland_Main")
+        if(vCarte==="Summerland_Main")
     {
        vMapDistance = 204000;
    }
+ 
 
    var layer = new Konva.Layer();
    var imageObj = new Image();
@@ -222,7 +224,6 @@ window.addEventListener('wheel', (e) => {
     adaptSize(vScale);
 });
 
-
 stage.on('tap',function(){
     var vScaleFactor = 1.4;
     var oldScale = stage.scaleX();
@@ -269,7 +270,6 @@ stage.on('dbltap',function(){
     adaptSize(vScale);    
 });
 
-
 // start timer
 vTimer = setInterval(RefreshMaps, 200);
 
@@ -282,34 +282,22 @@ imageLoot.src = vUrlLoot;
 }
 
 function adaptSize(scale)
-{    
+{
     vFontSize = 6
     vRadius = 2;
-    var vTmpStroke = true;
 
     if(scale==1)
     {
         vRadius = vRadiusInit;
         vFontSize = 11;
     }
-    else
-    {
-        vFontSize = 12 / scale;
-        if(scale>4)
-        {
-           vRadius = 1;
-           vTmpStroke = false;
-        }         
-    }
 
     vObj.players.forEach(function(eleme)
     {
         var vName = eleme.name;
-        var vId = eleme.id;
-        var vCircle = stage.findOne("#" + vId);
-        var vTexte = stage.findOne("#txt_" + vId);
+        var vCircle = stage.findOne("#" + vName);
+        var vTexte = stage.findOne("#txt_" + vName);
         vCircle.radius(vRadius);
-        //vCircle.strokeEnabled(vTmpStroke);
         vTexte.fontSize(vFontSize);
     });
 }
@@ -345,19 +333,6 @@ function initCircles()
 
     vLayer.add(bcircle);
 
-    var gcircle = new Konva.Circle({
-        x: 0,
-        y: 0,
-        radius: 0, 
-        stroke: 'gray',
-        fill: 'gray',
-        strokeWidth: 2,        
-        opacity: 0.4,
-        id:'gcircle'
-    });
-
-    vLayer.add(gcircle);
-
 
     var wcircle = new Konva.Circle({
         x: 0,
@@ -386,16 +361,15 @@ function initCircles()
     vObj.players.forEach(function(eleme)
     {
         name = eleme.name;
-        id = eleme.id;
         pts = eleme.points;
         x = 0;
         y = 0;
         couleur = eleme.color;
-        
-        if(vObj.carte ==="DihorOtok_Main" && eleme.isplayer===0)
+            if(vObj.carte ==="DihorOtok_Main" && eleme.isplayer===0)
         {
             couleur = "#767676";
         }
+
 
         var circle = new Konva.Circle({
             x: 0,
@@ -404,7 +378,7 @@ function initCircles()
             fill: couleur,
             stroke: 'black',
             strokeWidth: vStroke,
-            id:id,
+            id:name,
             perfectDrawEnabled : false
         });
 
@@ -415,7 +389,7 @@ function initCircles()
             fill: 'white',
             fontSize: 11,
             fontStyle: 'bold',
-            id:"txt_" + id
+            id:"txt_" + name
         });
 
         if(eleme.isplayer==1)
@@ -432,7 +406,6 @@ function initCircles()
                 {
                      text.fill('white'); 
                 }
-            
         }
 
         vLayer.add(text);
@@ -532,10 +505,6 @@ function displayTime(vNb)
     var vRougeY = 0;
     var vRougeR = 0;
 
-    var vNoirX = 0;
-    var vNoirY = 0;
-    var vNoirR = 0;
-
     for(igms=0;igms < vObj.gamestates.length;igms++)
     {
         var gs = vObj.gamestates[igms];
@@ -550,9 +519,6 @@ function displayTime(vNb)
             vRougeX  = gs.redzone_x;
             vRougeY  = gs.redzone_y;
             vRougeR  = gs.redzone_radius;
-            vNoirX  = gs.blackzone_x;
-            vNoirY  = gs.blackzone_y;
-            vNoirR  = gs.blackzone_radius;
         }   
         else
         {
@@ -573,21 +539,6 @@ function displayTime(vNb)
         wcircle.x(0);
         wcircle.y(0);
         wcircle.radius(0); 
-    }
-
-    if(vNoirR>0)
-    {
-        var gcircle = stage.findOne("#gcircle");
-        gcircle.x(coordToPix(vNoirX));
-        gcircle.y(coordToPix(vNoirY));
-        gcircle.radius(coordToPix(vNoirR)); 
-    }
-    else
-    {
-        var gcircle = stage.findOne("#gcircle");
-        gcircle.x(0);
-        gcircle.y(0);
-        gcircle.radius(0); 
     }
 
     if(vBleuR>0)
@@ -627,7 +578,6 @@ function displayTime(vNb)
     {
 
         name = eleme.name;
-        id = eleme.id;
         pts = eleme.points;
         x = 0;
         y = 0;
@@ -643,8 +593,6 @@ function displayTime(vNb)
             y = coord.y;
         }
         couleur = "#ff0000";
-
-
     }
     else
     {
@@ -662,27 +610,27 @@ function displayTime(vNb)
                 break;
             }
         }
-         if(vObj.carte ==="DihorOtok_Main" && eleme.isplayer===0)
+          if(vObj.carte ==="DihorOtok_Main" && eleme.isplayer===0)
         {
             couleur = "#767676";
-        }
+        }    
     }
 
-    var circle = stage.findOne("#" + id);    
+    var circle = stage.findOne("#" + name);
     circle.x(coordToPix(x));
     circle.y(coordToPix(y));    
     circle.fill(couleur);
     
     if( vNb < eleme.kill)
     {
-        var texte = stage.findOne("#txt_" + id);
+        var texte = stage.findOne("#txt_" + name);
         texte.x(coordToPix(x) + 5);
         texte.y(coordToPix(y) - 5);
         texte.visible(vDisplayName);        
     }
     else
     {
-        var texte = stage.findOne("#txt_" + id);
+        var texte = stage.findOne("#txt_" + name);
         if(texte!==undefined)
         {
             texte.visible(false);
@@ -706,8 +654,8 @@ for(idmg=0;idmg < vObj.damages.length;idmg++)
     } 
     if(vDamage.elapsed > vLastDisplayTime && vDamage.elapsed <= vNb)
     {
-        var damager = vDamage.attackerId;
-        var victim = vDamage.victimId; 
+        var damager = vDamage.attacker;
+        var victim = vDamage.victim; 
 
         var vPosDmg = stage.findOne("#" + damager);
         var vPosVic = stage.findOne("#" + victim);
@@ -747,7 +695,7 @@ for(idmg=0;idmg < vObj.damages.length;idmg++)
     }       
 }
 
-$("#nbalive").html("Left : <strong>" + nbAlive + "</strong>");
+$("#nbalive").html("Joueurs vivants : <strong>" + nbAlive + "</strong>");
 vLastDisplayTime = vNb;
 vLayer.draw();
 

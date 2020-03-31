@@ -12,7 +12,6 @@ class PathProvider
     {
         $obj = json_decode($json);
         $collect = collect($obj);
-        $gba = $collect->groupBy('_T')->toArray();
 
         $maxelapsed = 0;
         $team_id = "";
@@ -31,15 +30,10 @@ class PathProvider
             return  \Carbon\Carbon::createFromFormat("Y-m-d H:i:s",$date,"UTC");
         };
 
-        $getItems = function($collection,$key)
-        {
-            return collect($collection[$key]);
-        };
-
-        $start = $getItems($gba,"LogMatchStart")->first();
+        $start = $collect->where('_T',"LogMatchStart")->first();
         $startt = $start->_D;
         $datestart = $ftdate($startt);  
-        if(isset($start->mapName))  
+         if(isset($start->mapName))  
         {
             $carte = $start->mapName;
         }  
@@ -55,33 +49,37 @@ class PathProvider
         $participants_array = array();
         $damages_array = array();
 
-        $ids = $getItems($gba,"LogMatchDefinition")->first();  
+        $ids = $collect->where('_T',"LogMatchDefinition")->first();  
         $idtmp = $ids->MatchId;
         $obj = S::create($idtmp);
         $posdash = $obj->indexOfLast("."); 
-        $id = $obj->substr($posdash+1)->__toString();             
-             
-        $players =$getItems($gba,"LogMatchEnd");
+        $id = $obj->substr($posdash+1)->__toString();  
+
+        $players = $collect->where('_T',"LogMatchEnd");
         foreach ($players as $elem) {
-            foreach ($elem->characters as $char) {
+
+         
+                foreach ($elem->characters as $char) {
                 $participant = new \stdClass();
-                $participant->name = $char->name;
-                $participant->id = sha1($char->name);
-                if($char->name==$name)
+                $participant->name = (isset($char->character->name)) ? $char->character->name : $char->name;
+                if($participant->name==$name)
                 {
-                    $team_id = $char->teamId;
+                    $team_id = (isset($char->character->teamId)) ? $char->character->teamId : $char->teamId; 
                 }
-                $participant->ranking= $char->ranking;
-                $participant->teamId = $char->teamId;
+                $participant->ranking = (isset($char->character->ranking)) ? $char->character->ranking : $char->ranking; ;
+                $participant->teamId  = (isset($char->character->teamId)) ? $char->character->teamId : $char->teamId;  
                 $participants_array[] = $participant;               
-            } 
+                } 
+             
+
+            
                     
         }
 
         $parts = collect($participants_array);
         $names = $parts->where('teamId',$team_id)->pluck('name')->toArray();
 
-        $positions = $getItems($gba,"LogPlayerPosition");
+        $positions = $collect->where('_T',"LogPlayerPosition");
         foreach ($positions as $elem) {
             $position = new \stdClass();
             $position->id = $id;
@@ -96,7 +94,7 @@ class PathProvider
 
         $locs = collect($position_array);     
         
-        $loots = $getItems($gba,"LogCarePackageLand");
+        $loots = $collect->where('_T',"LogCarePackageLand");
         foreach ($loots as $elem) {
             $loot = new \stdClass();
             $loot->id = $id;
@@ -108,7 +106,7 @@ class PathProvider
             $loot_array[] = $loot;
         }    
 
-        $zones = $getItems($gba,"LogGameStatePeriodic");
+        $zones = $collect->where('_T',"LogGameStatePeriodic");
         foreach($zones as $elem)
         {
             $zone = new \stdClass();
@@ -127,27 +125,22 @@ class PathProvider
             $zone->redzone_radius = $elem->gameState->redZoneRadius;
             $zone->redzone_x = $elem->gameState->redZonePosition->x;
             $zone->redzone_y = $elem->gameState->redZonePosition->y;
-            $zone->blackzone_radius = $elem->gameState->blackZoneRadius;
-            $zone->blackzone_x = $elem->gameState->blackZonePosition->x;
-            $zone->blackzone_y = $elem->gameState->blackZonePosition->y;
             $zone_array[] = $zone;
         }
 
-        $attacks = $getItems($gba,'LogPlayerAttack');
+        $attacks = $collect->where('_T','LogPlayerAttack');
 
 
-        $damages = $getItems($gba,'LogPlayerTakeDamage')->where('damageTypeCategory','Damage_Gun');
+        $damages = $collect->where('_T','LogPlayerTakeDamage')->where('damageTypeCategory','Damage_Gun');
         foreach ($damages as $elem) {
             $damage = new \stdClass();
             $damage->id = $elem->attackId;
             $damage->victim = $elem->victim->name;
-            $damage->victimId = sha1($elem->victim->name);
             $damage->x1 = $elem->victim->location->x;
             $damage->y1 = $elem->victim->location->y;
 
             $attacker = $attacks->where('attackId',$damage->id)->first();
             $damage->attacker = $attacker->attacker->name;
-            $damage->attackerId = sha1($attacker->attacker->name);
             $damage->x2 = $attacker->attacker->location->x;
             $damage->y2 = $attacker->attacker->location->y;
             $damage->elapsed = $datestart->diffInSeconds($ftdate($elem->_D));
@@ -158,7 +151,6 @@ class PathProvider
             $name = $participant->name;
             $obj = new \stdClass();
             $obj->name = $name;
-            $obj->id = $participant->id;
             $obj->color = in_array($name,$names) ? "#00ff00": "#ffffff";
             $obj->points = array();
             $obj->teamId = $participant->teamId;
@@ -189,8 +181,8 @@ class PathProvider
         $ret->duration = $maxelapsed;
         $ret->gamestates =$zone_array;
         $ret->damages = $damages_array;
-        $ret->loots = $loot_array; 
+        $ret->loots = $loot_array;
 
-        return $ret;  
-    }    
+        return $ret;   
+    } 
 }
