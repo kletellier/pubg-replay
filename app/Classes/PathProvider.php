@@ -2,6 +2,15 @@
  
 namespace App\Classes;
 
+use App\Models\Parties;
+use App\Models\Joueurs;
+use App\Models\LienJoueurPartie;
+use App\Models\Gamestate;
+
+use App\Classes\LocationProvider;
+
+use Illuminate\Support\Facades\Redis;
+
 use Stringy\Stringy as S;
 use Carbon\Carbon;
 
@@ -139,12 +148,19 @@ class PathProvider
             $damage->x1 = $elem->victim->location->x;
             $damage->y1 = $elem->victim->location->y;
 
-            $attacker = $attacks->where('attackId',$damage->id)->first();
-            $damage->attacker = $attacker->attacker->name;
-            $damage->x2 = $attacker->attacker->location->x;
-            $damage->y2 = $attacker->attacker->location->y;
-            $damage->elapsed = $datestart->diffInSeconds($ftdate($elem->_D));
-            $damages_array[] = $damage;
+            $attacker = $attacks->where('attackId',$damage->id)->first(); 
+            if($attacker!==null)
+            {
+                if(isset($attacker->attacker))
+                {
+                    $damage->attacker = $attacker->attacker->name;
+                    $damage->x2 = $attacker->attacker->location->x;
+                    $damage->y2 = $attacker->attacker->location->y;
+                    $damage->elapsed = $datestart->diffInSeconds($ftdate($elem->_D));
+                    $damages_array[] = $damage;
+                }               
+            }
+            
         }
 
         foreach ($participants_array as $participant) {
@@ -184,5 +200,65 @@ class PathProvider
         $ret->loots = $loot_array;
 
         return $ret;   
+    }
+
+    public static function getPath($id)
+    {
+        $ret = FALSE; 
+        $partie = Parties::where('id',$id)->first();
+        if($partie!=null)
+        {
+             
+            $maxelapsed = 0;
+            $ret = new \stdClass();
+            $ret->id = $id;
+             
+            $ret->carte = $partie->cartes;
+            $locations = LocationProvider::getPositionArray($id);
+            $participants = $partie->participants;
+
+            $lien = LienJoueurPartie::where("partie",$id)->get(); 
+            foreach ($lien as $value) 
+            {
+                $ids[] = $value->joueur;
+            }
+            $names = Joueurs::whereIn("id",$ids)->select(array("name"))->get()->pluck("name")->toArray();
+            
+            $locs = collect($locations);
+            $players = array();
+
+            foreach ($participants as $participant) {
+                $name = $participant->name;
+                $obj = new \stdClass();
+                $obj->name = $name;
+                $obj->color = in_array($name,$names) ? "#00ff00": "#ffffff";
+                $obj->points = array();
+                $obj->winPlace = $participant->winPlace;
+                $obj->isplayer = in_array($name,$names) ? 1 : 0;
+                $tmp = $locs->where('name',$name)->sortBy('elapsed');
+                $lastelapsed = 0;
+
+                foreach ($tmp as $loc) {
+                    if($loc->elapsed>0)
+                    {
+                        
+                        $pt = new \stdClass();
+                        $pt->x = $loc->position_x;
+                        $pt->y = $loc->position_y;
+                        $pt->elapsed = $loc->elapsed;
+                        if($loc->elapsed>$lastelapsed)$lastelapsed=$loc->elapsed;
+                        if($loc->elapsed>$maxelapsed)$maxelapsed=$loc->elapsed;
+                        $obj->points[] = $pt;                           
+                    }                         
+                }
+                $obj->kill = $lastelapsed;
+                $players[] = $obj;            
+            }  
+            $ret->players = $players;
+            $ret->duration = $maxelapsed;
+            $ret->gamestates = Gamestate::Partie($id)->get();
+            $ret->loots = LocationProvider::getLootArray($id);
+        } 
+        return $ret;
     } 
 }
