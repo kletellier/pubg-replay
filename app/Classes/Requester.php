@@ -36,6 +36,7 @@ class Requester
         }
         else
         {
+        	dd($this->curl);
         	$this->body=FALSE;
         }
 	 }
@@ -52,6 +53,8 @@ class Requester
 		$this->curl->setOpt(CURLOPT_RETURNTRANSFER, TRUE);
 		$this->curl->setOpt(CURLOPT_FOLLOWLOCATION, TRUE);
 		$this->curl->setOpt(CURLOPT_TIMEOUT, 45);
+		$this->curl->setOpt(CURLOPT_SSL_VERIFYHOST, 0);
+		$this->curl->setOpt(CURLOPT_SSL_VERIFYPEER, 0); 
 		$this->curl->get($url);
 		$this->parseResponse();		 
 	 }
