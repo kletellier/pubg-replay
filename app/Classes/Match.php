@@ -45,7 +45,7 @@ class Match   {
 	 		$this->last_http_code = $requester->getLastHttpCode();
 	 		if($requester->isResponseOk())
 	 		{
-	 			$json = $requester->getBody();
+	 			$json = $requester->getBody();	 			 
 	 			$this->setJson($json);
 	 			if($this->id!=="")
 	 			{

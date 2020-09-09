@@ -30,7 +30,7 @@ class ReplayProvider
 			else
 			{
 				// if not exists , extract telemetry, parse it, store it
-				$telemetry = TelemetryProvider::getTelemetry($id,$match->getTelemetryUrl());
+				$telemetry = TelemetryProvider::getTelemetry($id,$match->getTelemetryUrl());				 
 				$ret  = PathProvider::getFromTelemetry($telemetry,$user);	
 				Storage::disk('local')->put($path,json_encode($ret));
 			}

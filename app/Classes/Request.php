@@ -19,7 +19,9 @@ class Request{
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 			curl_setopt($ch, CURLINFO_HEADER_OUT, true);  
 			curl_setopt($ch, CURLOPT_ENCODING, "gzip");
-		 	curl_setopt($ch, CURLOPT_TIMEOUT, 45);   
+		 	curl_setopt($ch, CURLOPT_TIMEOUT, 45);  
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); 
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);  
 		 	$headers = [ 
 			    'Accept: application/vnd.api+json',
 			    'Accept-Encoding: gzip',
