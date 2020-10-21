@@ -12,4 +12,5 @@ class Maps   {
    const MAP_VIKENDI = "DihorOtok_Main";
    const MAP_BALTIC = "Baltic_Main";
    const MAP_SUMMERLAND = "Summerland_Main";
+   const MAP_PARAMO = "Chimera_Main";
 }

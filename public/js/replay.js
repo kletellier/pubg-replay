@@ -145,18 +145,24 @@ function displayMap()
 
     if(vCarte==="Savage_Main")
     {
-       vMapDistance = 408000;
-   }
+        vMapDistance = 408000;
+    }
 
-      if(vCarte==="DihorOtok_Main")
+    if(vCarte==="DihorOtok_Main")
     {
-       vMapDistance = 612000;
-   }
+        vMapDistance = 612000;
+    }
 
-        if(vCarte==="Summerland_Main")
+    if(vCarte==="Summerland_Main")
     {
-       vMapDistance = 204000;
-   }
+        vMapDistance = 204000;
+    }
+
+    if(vCarte==="Chimera_Main")
+    {
+        vMapDistance = 306000;
+    }
+ 
  
 
    var layer = new Konva.Layer();
