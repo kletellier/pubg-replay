@@ -4,9 +4,9 @@
 
  Website from displaying PUBG (Playerunknown's Battleground) animated replays on HTML5 canvas.
 
- This website has been developped on Laravel 5.6, with Redis, Jquery, Bootstrap 3, KonvaJs and SimpleImage.
+ This website has been developped on Laravel 8, with Redis, Jquery, Bootstrap 3, KonvaJs and SimpleImage.
 
- You need PHP 7.1 server with GD extension and Redis server
+ You need PHP 7.3 server with GD extension and Redis server
 
 ## Installation
 
@@ -15,7 +15,6 @@
 - Fill PUBG_KEY with your Pubg Api key in .env file, if you doesn't have one, claim it [Pubg API] (https://developer.playbattlegrounds.com/?loc=en) 
 - Fill your Redis server info in .env file
 - Execute ```composer update --prefer-dist -o``` 
-- Execute ``` php artisan key:generate```
 - You can test with internal php server : ``` php artisan serve``` and browse http://127.0.0.1:8000
 - Or add it in your webserver and point it on public folder
 
@@ -23,11 +22,11 @@
 
 ## Screenshots
 
-![Search](http://pubg-replay.kletellier.xyz/images/menu.png) 
+![Search](http://pubg-replay.kletellier.ovh/images/menu.png) 
 
-![List](http://pubg-replay.kletellier.xyz/images/list.png) 
+![List](http://pubg-replay.kletellier.ovh/images/list.png) 
 
-![Replay](http://pubg-replay.kletellier.xyz/images/replaypage.png) 
+![Replay](http://pubg-replay.kletellier.ovh/images/replaypage.png) 
 
 ## License
 
